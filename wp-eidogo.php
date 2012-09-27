@@ -1212,12 +1212,19 @@ html;
 
 		} elseif ($theme == 'problem') { # {{{
 			$js_config = array(
-				'theme'             => "problem",
-				'enableShortcuts'   => false,
-				'problemMode'       => true,
+				'theme'             => "compact",
+				'mode'				=> "play",
+				'showNavTree'		=> true,
+				'showComments'		=> true,
+				'showPlayerInfo'	=> true,
+				'showGameInfo'		=> false,
+				'showTools'			=> true,
+				'showOptions'		=> true,
+				'markCurrent'		=> true,
+				'enableShortcuts'   => true,
+				'problemMode'       => false,
 				'markVariations'    => false,
 				'markNext'          => false,
-				'shrinkToFit'       => true,
 			);
 			if ($params['problemcolor'])
 				$js_config['problemColor'] = $params['problemcolor'];
