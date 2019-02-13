@@ -748,7 +748,7 @@ html;
 	} # }}}
 
 	function clean_sgf_composed($val) { # {{{
-		$parts = split(':', $val);
+		$parts = explode(':', $val);
 		$ret = array();
 		$current = null;
 		foreach ($parts as $part) {
@@ -1280,7 +1280,7 @@ javascript;
 				if (broken_browser) {
 					document.getElementById('player-container-{$this->sgf_count}').innerHTML = broken_browser;
 				} else {
-					$player_js
+					$player_js;
 				}
 			--></script>
 			$caption
