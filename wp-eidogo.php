@@ -399,47 +399,47 @@ html;
 		# built-in wordpress functions, so we need to do our parsing BEFORE any such
 		# filters are called. However, we also want to avoid such filters modifying our
 		# markup, so we need to do the actual embedding at the end of the filter chain.
-		add_filter('the_content',  array(&$this, 'prepare_markup'), 9);
-		add_filter('the_excerpt',  array(&$this, 'prepare_markup'), 9);
-		add_filter('comment_text', array(&$this, 'prepare_markup'), 9);
-		add_filter('the_content',  array(&$this, 'embed_markup'), 99);
-		add_filter('the_excerpt',  array(&$this, 'embed_markup'), 99);
-		add_filter('comment_text', array(&$this, 'embed_markup'), 99);
+		add_filter('the_content',  array($this, 'prepare_markup'), 9);
+		add_filter('the_excerpt',  array($this, 'prepare_markup'), 9);
+		add_filter('comment_text', array($this, 'prepare_markup'), 9);
+		add_filter('the_content',  array($this, 'embed_markup'), 99);
+		add_filter('the_excerpt',  array($this, 'embed_markup'), 99);
+		add_filter('comment_text', array($this, 'embed_markup'), 99);
 
-		add_filter('the_content_rss',  array(&$this, 'prepare_markup'), 9);
-		add_filter('the_excerpt_rss',  array(&$this, 'prepare_markup'), 9);
-		add_filter('comment_text_rss', array(&$this, 'prepare_markup'), 9);
-		add_filter('the_content_rss',  array(&$this, 'embed_markup'), 99);
-		add_filter('the_excerpt_rss',  array(&$this, 'embed_markup'), 99);
-		add_filter('comment_text_rss', array(&$this, 'embed_markup'), 99);
+		add_filter('the_content_rss',  array($this, 'prepare_markup'), 9);
+		add_filter('the_excerpt_rss',  array($this, 'prepare_markup'), 9);
+		add_filter('comment_text_rss', array($this, 'prepare_markup'), 9);
+		add_filter('the_content_rss',  array($this, 'embed_markup'), 99);
+		add_filter('the_excerpt_rss',  array($this, 'embed_markup'), 99);
+		add_filter('comment_text_rss', array($this, 'embed_markup'), 99);
 
 		# For necessary stylesheets and javascript files
-		add_action('wp_head', array(&$this, 'eidogo_head_tags'));
-		add_action('admin_head', array(&$this, 'eidogo_head_tags_admin'));
+		add_action('wp_head', array($this, 'eidogo_head_tags'));
+		add_action('admin_head', array($this, 'eidogo_head_tags_admin'));
 
 		# Support for SGF files in media library
-		add_filter('upload_mimes', array(&$this, 'sgf_mimetypes'));
-		add_filter('post_mime_types', array(&$this, 'add_media_tab'));
-		add_filter('ext2type', array(&$this, 'sgf_extension'));
-		add_filter('wp_mime_type_icon', array(&$this, 'sgf_icon'), 10, 3);
+		add_filter('upload_mimes', array($this, 'sgf_mimetypes'));
+		add_filter('post_mime_types', array($this, 'add_media_tab'));
+		add_filter('ext2type', array($this, 'sgf_extension'));
+		add_filter('wp_mime_type_icon', array($this, 'sgf_icon'), 10, 3);
 		add_filter('attachment_fields_to_edit', array(&$this, 'sgf_media_form'), 10, 2);
 		add_filter('media_send_to_editor', array(&$this, 'sgf_send_to_editor'), 10, 3);
 		add_filter('attachment_fields_to_save', array(&$this, 'save_sgf_info'), 10, 3);
 
 		# For the random problem and problem and game browser widgets
-		add_action('widgets_init', array(&$this, 'register_widgets'));
-		add_filter('get_terms', array(&$this, 'fix_term_count'), 10, 3);
+		add_action('widgets_init', array($this, 'register_widgets'));
+		add_filter('get_terms', array($this, 'fix_term_count'), 10, 3);
 
 		# For admin menu options
-		add_action('admin_menu', array(&$this, 'add_admin_menu_options'));
-		add_action('admin_init', array(&$this, 'setup_options'));
+		add_action('admin_menu', array($this, 'add_admin_menu_options'));
+		add_action('admin_init', array($this, 'setup_options'));
 
 		# When the plugin is activated
-		register_activation_hook(__FILE__, array(&$this, 'activate_plugin'));
+		register_activation_hook(__FILE__, array($this, 'activate_plugin'));
 
 		# Fix posts query for attachments
-		add_filter('posts_join', array(&$this, 'include_unpublished_join'), 10, 3);
-		add_filter('posts_where', array(&$this, 'include_unpublished_where'), 10, 3);
+		add_filter('posts_join', array($this, 'include_unpublished_join'), 10, 3);
+		add_filter('posts_where', array($this, 'include_unpublished_where'), 10, 3);
 
 	} # }}}
 
@@ -1290,7 +1290,7 @@ html;
 		if (is_feed() || $params['image'])
 			return $this->embed_static($params, $sgf_data);
 		else
-			return "\n\n[sgfPrepared id=\"".($this->sgf_count++)."\"]\n\n";
+			return "\n\n[sgfPrepared id=".($this->sgf_count++)."]\n\n";
 
 	} # }}}
 
@@ -1306,23 +1306,23 @@ html;
 	function prepare_markup($content) { # {{{
 		$content = preg_replace_callback(
 			'|\s*\[sgf(.*?)\](.*?)\[/sgf\]\s*|si',
-			array(&$this, 'prepare_sgf'), $content);
+			array(get_class($this), 'prepare_sgf'), $content);
 
 		return $content;
 	} # }}}
 
 	function embed_markup($content) { # {{{
-		$sgf_pattern = '\[sgfPrepared\s+id="(\d+)"\]';
+		$sgf_pattern = '\[sgfPrepared\s+id=(\d+)\]';
 
 		# Handle cases that have been modified by wpautop, etc.
 		$content = preg_replace_callback(
 			'|<p[^>]*>\s*'.$sgf_pattern.'\s*</p>|si',
-			array(&$this, 'embed_sgf'), $content);
+			array(get_class($this), 'embed_sgf'), $content);
 
 		# Fallback in case those didn't happen
 		$content = preg_replace_callback(
 			'|'.$sgf_pattern.'|si',
-			array(&$this, 'embed_sgf'), $content);
+			array(get_class($this), 'embed_sgf'), $content);
 
 		return $content;
 	} # }}}
