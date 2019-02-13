@@ -1363,7 +1363,7 @@ html;
 
 }
 
-$wpeidogo_plugin =& new WpEidoGoPlugin();
+$wpeidogo_plugin = (new WpEidoGoPlugin());
 
 function wpeidogo_embed_attachment($post, $class=null, $caption=null, $href=null, $theme=null, $method=null) { # {{{
 	global $wpeidogo_plugin;
