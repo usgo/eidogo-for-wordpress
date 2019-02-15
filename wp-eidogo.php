@@ -1245,9 +1245,17 @@ html;
 			$js_config['sgf'] = $sgf_data;
 		$js_config['container'] = 'player-container-' . $this->sgf_count;
 		foreach (array('loadPath', 'mode', 'sgfUrl') as $key) {
-			$lkey = strtolower($key);
-			if ($params[$lkey])
-				$js_config[$key] = $params[$lkey];
+			$lower_key = strtolower($key);
+			if ($params[$lower_key]) {
+                                // Set the urls to relative if they contain a scheme; otherwise, just add the url and other keys
+                                // are added normally.
+				if ($lower_key == 'sgfurl' && parse_url($params[$lower_key], PHP_URL_SCHEME) !== null) {
+                                        $params[$lower_key] = trim($params[$lower_key]);
+                                        $js_config[$key] = parse_url($params[$lower_key], PHP_URL_PATH);
+                                } else {
+                                        $js_config[$key] = $params[$lower_key];
+                                }
+                        }
 		}
 
 		$js_config = json_encode($js_config);
