@@ -1159,7 +1159,12 @@ html;
 		$caption = htmlspecialchars($params['caption']);
 		if ($params['href']) {
 			if (!$caption) $caption = '[link]';
-			$caption = '<a href="'.htmlspecialchars(parse_url($params['href']), PHP_URL_PATH).'">' . $caption . '</a>';
+
+                        // Sets link to relative urls.
+                        $href_for_sgf_file = trim($params['href']);
+                        $href_for_sgf_file = parse_url($href_for_sgf_file, PHP_URL_PATH);
+
+			$caption = '<a href="'.htmlspecialchars($href_for_sgf_file).'">' . $caption . '</a>';
 		}
 		if ($caption)
 			$caption = '<p class="wp-caption-text">'.$caption.'</p>';
