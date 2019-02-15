@@ -1159,7 +1159,7 @@ html;
 		$caption = htmlspecialchars($params['caption']);
 		if ($params['href']) {
 			if (!$caption) $caption = '[link]';
-			$caption = '<a href="'.htmlspecialchars($params['href']).'">' . $caption . '</a>';
+			$caption = '<a href="'.htmlspecialchars(parse_url($params['href']), PHP_URL_PATH).'">' . $caption . '</a>';
 		}
 		if ($caption)
 			$caption = '<p class="wp-caption-text">'.$caption.'</p>';
