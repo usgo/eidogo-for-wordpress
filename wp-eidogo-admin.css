@@ -1,0 +1,46 @@
+/* Styles for admin screen */
+#media-upload tr.eidogo_theme td.field,
+#media-upload tr.embed_method td.field,
+#media-upload tr.problem_color td.field {
+	padding-left: 36px;
+}
+
+tr.eidogo_theme td.field label,
+tr.embed_method td.field label,
+tr.problem_color td.field label {
+	margin: 0 1em 0 0 !important;
+	padding: 0 0 0 2px !important;
+	display: inline !important;
+}
+
+tr.problem_category label {
+	word-spacing: -1px;
+}
+
+tr.wpeidogo_meta,
+tr.problem_category,
+tr.problem_difficulty,
+tr.game_category {
+	display: none;
+}
+
+/* Work around an apparent bug in the WordPress styles */
+input[type="radio"] {
+	border: 0 !important;
+}
+
+.wpeidogo_checkgroup {
+	height: 100px;
+	overflow-y: scroll;
+	border: 1px solid #dddddd;
+	padding: 3px !important;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+h5.wpeidogo_checkgroup_title {
+	margin-bottom: 0;
+	font-size: 100%;
+}
+
+/* vim: set ts=4 sts=4 sw=4 noet : */
