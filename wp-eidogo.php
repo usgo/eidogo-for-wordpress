@@ -1303,8 +1303,8 @@ html;
             return '<a href="'.$params['sgfurl'].'">Download SGF File</a>';
         elseif ($params['image'])
             return $this->embed_static($params, $sgf_data);
-		else
-			return "\n\n[sgfPrepared id=".($this->sgf_count++)."]\n\n";
+	else
+	    return "\n\n[sgfPrepared id=".($this->sgf_count++)."]\n\n";
 
 	} # }}}
 
