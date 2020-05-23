@@ -1300,9 +1300,9 @@ javascript;
 			</div>
 html;
         if (is_feed())
-                return '<a href="'.$params['sgfurl'].'">Download SGF File</a>';
+            return '<a href="'.$params['sgfurl'].'">Download SGF File</a>';
         elseif ($params['image'])
-                return $this->embed_static($params, $sgf_data);
+            return $this->embed_static($params, $sgf_data);
 		else
 			return "\n\n[sgfPrepared id=".($this->sgf_count++)."]\n\n";
 
