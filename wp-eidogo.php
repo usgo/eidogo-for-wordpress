@@ -1036,7 +1036,7 @@ html;
 			} elseif (preg_match('!https?://!', $sgfurl)) {
 				# remote
 				$sgf_file = '-';
-				$sgf_data = file_get_contents($sgfurl, 0, null, -1, 65536);
+				$sgf_data = file_get_contents($sgfurl, 0, null, 0, 65536);
 			} elseif (substr($sgfurl, 0, 1) == '/') {
 				# relative URL, local
 				$sgf_file = ABSPATH . ltrim($sgfurl, '/');
@@ -1299,9 +1299,10 @@ javascript;
 			$caption
 			</div>
 html;
-
-		if (is_feed() || $params['image'])
-			return $this->embed_static($params, $sgf_data);
+        if (is_feed())
+            return '<a href="'.$params['sgfurl'].'">Download SGF File</a>';
+        elseif ($params['image'])
+            return $this->embed_static($params, $sgf_data);
 		else
 			return "\n\n[sgfPrepared id=".($this->sgf_count++)."]\n\n";
 
